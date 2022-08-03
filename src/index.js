@@ -1,22 +1,21 @@
 import express from "express";
 import cors from "cors";
 
-const app = express(); // instanciranje aplikacije
-const port = 3000; // port na kojem će web server slušati
+import connect from "./db.js";
 
-app.use(cors()); // omogući CORS na svim rutama
-app.use(express.json()); //dekodiranje JSON poruke od klijenta
+const app = express();
+const port = 3000;
 
-app.get("/orders", (req, res) => {
-  res.json([]);
-});
+app.use(cors());
+app.use(express.json());
 
-app.post("/orders", (req, res) => {
-  let doc = req.body;
-  console.log(doc);
+app.get("/govedo", async (req, res) => {
+  let db = await connect();
+  let kolekcija = db.collection("govedo");
+  let cursor = await kolekcija.find();
+  let data = await cursor.toArray();
 
-  res.status(201);
-  res.send();
+  res.json(data);
 });
 
 app.listen(port, () => console.log(`Slušam na portu ${port}!`));

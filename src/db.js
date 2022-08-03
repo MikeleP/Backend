@@ -17,7 +17,7 @@ function isConnected() {
 export default async () => {
   if (!db || !isConnected()) {
     await client.connect();
-    db = client.db("govedo");
+    db = client.db("registar");
     console.log("Connected OK");
   }
   return db;
