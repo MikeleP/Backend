@@ -31,4 +31,13 @@ app.post("/govedo", async (req, res) => {
   res.send();
 });
 
+app.get("/dolazak", async (req, res) => {
+  let db = await connect();
+  let kolekcija = db.collection("dolazak");
+  let cursor = await kolekcija.find();
+  let data = await cursor.toArray();
+
+  res.json(data);
+});
+
 app.listen(port, () => console.log(`Slušam na portu ${port}!`));
