@@ -68,6 +68,18 @@ app.get("/dolazak", async (req, res) => {
   res.json(data);
 });
 
+app.post("/dolazak", async (req, res) => {
+  let doc = req.body;
+  console.log(doc);
+
+  let db = await connect();
+  let kolekcija = db.collection("dolazak");
+
+  let result = await kolekcija.insertOne(doc);
+
+  res.status(201);
+  res.send();
+});
 //------------------------- ODLAZAK ------------------------------
 
 app.listen(port, () => console.log(`Slušam na portu ${port}!`));
