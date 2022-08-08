@@ -143,6 +143,18 @@ app.put("/odlazak/:idOdlaska", async (req, res) => {
   res.send();
 });
 
+app.delete("/odlazak/:idOdlaska", async (req, res) => {
+  let id = req.params.idOdlaska;
+
+  let db = await connect();
+  let kolekcija = db.collection("odlazak");
+
+  let result = await kolekcija.findOneAndDelete({ _id: ObjectId(id) });
+
+  res.status(201);
+  res.send();
+});
+
 //----------------------------------------------------------------
 
 app.listen(port, () => console.log(`Slušam na portu ${port}!`));
