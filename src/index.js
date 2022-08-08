@@ -45,6 +45,20 @@ app.put("/govedo/:idGoveda", async (req, res) => {
   res.send();
 });
 
+app.delete("/govedo/:idGoveda", async (req, res) => {
+  let id = req.params.idGoveda;
+
+  let db = await connect();
+  let kolekcija = db.collection("govedo");
+
+  let result = await kolekcija.findOneAndDelete({ _id: ObjectId(id) });
+
+  res.status(201);
+  res.send();
+});
+
+//------------------------- DOLAZAK ------------------------------
+
 app.get("/dolazak", async (req, res) => {
   let db = await connect();
   let kolekcija = db.collection("dolazak");
@@ -53,5 +67,7 @@ app.get("/dolazak", async (req, res) => {
 
   res.json(data);
 });
+
+//------------------------- ODLAZAK ------------------------------
 
 app.listen(port, () => console.log(`Slušam na portu ${port}!`));
