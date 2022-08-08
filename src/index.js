@@ -80,6 +80,20 @@ app.post("/dolazak", async (req, res) => {
   res.status(201);
   res.send();
 });
+
+app.put("/dolazak/:idDolaska", async (req, res) => {
+  let doc = req.body;
+  let id = req.params.idDolaska;
+
+  let db = await connect();
+  let kolekcija = db.collection("dolazak");
+
+  let result = await kolekcija.replaceOne({ _id: ObjectId(id) }, doc);
+
+  res.status(201);
+  res.send();
+});
+
 //------------------------- ODLAZAK ------------------------------
 
 app.listen(port, () => console.log(`Slušam na portu ${port}!`));
