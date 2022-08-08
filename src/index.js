@@ -117,6 +117,19 @@ app.get("/odlazak", async (req, res) => {
   res.json(data);
 });
 
+app.post("/odlazak", async (req, res) => {
+  let doc = req.body;
+  console.log(doc);
+
+  let db = await connect();
+  let kolekcija = db.collection("odlazak");
+
+  let result = await kolekcija.insertOne(doc);
+
+  res.status(201);
+  res.send();
+});
+
 //----------------------------------------------------------------
 
 app.listen(port, () => console.log(`Slušam na portu ${port}!`));
