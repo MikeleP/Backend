@@ -94,6 +94,18 @@ app.put("/dolazak/:idDolaska", async (req, res) => {
   res.send();
 });
 
+app.delete("/dolazak/:idDolaska", async (req, res) => {
+  let id = req.params.idDolaska;
+
+  let db = await connect();
+  let kolekcija = db.collection("dolazak");
+
+  let result = await kolekcija.findOneAndDelete({ _id: ObjectId(id) });
+
+  res.status(201);
+  res.send();
+});
+
 //------------------------- ODLAZAK ------------------------------
 
 app.listen(port, () => console.log(`Slušam na portu ${port}!`));
