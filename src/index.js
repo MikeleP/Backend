@@ -10,6 +10,8 @@ const port = 3000;
 app.use(cors());
 app.use(express.json());
 
+//------------------------- GOVEDO ------------------------------
+
 app.get("/govedo", async (req, res) => {
   let db = await connect();
   let kolekcija = db.collection("govedo");
