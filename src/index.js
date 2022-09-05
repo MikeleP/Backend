@@ -15,9 +15,14 @@ app.use(express.json());
 app.post("/users", async (req, res) => {
   let user = req.body;
 
-  auth.registerUser(user);
+  let id;
+  try {
+    id = await auth.registerUser(user);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
 
-  res.json(user);
+  res.json({ id: id });
 });
 
 //------------------------- GOVEDO ------------------------------

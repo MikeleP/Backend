@@ -16,7 +16,15 @@ export default {
       password: await bcrypt.hash(userData.password, 8),
       farm_code: userData.farm_code,
     };
-
-    await db.collection("users").insertOne(doc);
+    try {
+      let result = await db.collection("users").insertOne(doc);
+      if (result && result.insertedId) {
+        return result.insertedId;
+      }
+    } catch (e) {
+      if (e.name == "MongoServerError" && e.code == 11000) {
+        throw new Error("Korisnik već postoji.");
+      }
+    }
   },
 };
