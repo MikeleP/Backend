@@ -3,12 +3,22 @@ import cors from "cors";
 
 import connect from "./db.js";
 import { ObjectId, ObjectID } from "bson";
+import auth from "./auth.js";
+import mongo from "mongodb";
 
 const app = express();
 const port = 3000;
 
 app.use(cors());
 app.use(express.json());
+
+app.post("/users", async (req, res) => {
+  let user = req.body;
+
+  auth.registerUser(user);
+
+  res.json(user);
+});
 
 //------------------------- GOVEDO ------------------------------
 
