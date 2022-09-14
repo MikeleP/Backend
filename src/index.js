@@ -4,13 +4,24 @@ import cors from "cors";
 import connect from "./db.js";
 import { ObjectId, ObjectID } from "bson";
 import auth from "./auth.js";
-import mongo from "mongodb";
+// import mongo from "mongodb";
+// import { emit } from "nodemon";
 
 const app = express();
 const port = 3000;
 
 app.use(cors());
 app.use(express.json());
+
+app.post("/auth", async (req, res) => {
+  let user = req.body;
+
+  try {
+    await auth.authenticateUser(user.username, user.password);
+  } catch (e) {
+    res.satus(403).json({ error: e.message });
+  }
+});
 
 app.post("/users", async (req, res) => {
   let user = req.body;

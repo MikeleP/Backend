@@ -1,4 +1,4 @@
-import mongo from "mongodb";
+//import mongo from "mongodb";
 import connect from "./db.js";
 import bcrypt from "bcrypt";
 
@@ -23,8 +23,21 @@ export default {
       }
     } catch (e) {
       if (e.name == "MongoServerError" && e.code == 11000) {
-        throw new Error("Korisnik već postoji.");
+        throw new Error("Korisnik već postoji");
       }
+    }
+  },
+  async authenticateUser(username, password) {
+    let db = await connect();
+    let user = await db.collection("users").findOne({ username: username });
+
+    if (
+      user &&
+      user.password &&
+      (await bcrypt.compare(password, user.password))
+    ) {
+    } else {
+      throw new Error("Cannot authenticate");
     }
   },
 };
